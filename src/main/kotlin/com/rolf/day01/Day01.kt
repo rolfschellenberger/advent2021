@@ -1,6 +1,6 @@
 package com.rolf.day01
 
-import com.rolf.readLines
+import com.rolf.readLongs
 
 const val DAY = "01"
 
@@ -8,7 +8,7 @@ fun main(args: Array<String>) {
     println("+--------+")
     println("| Day $DAY |")
     println("+--------+")
-    val lines = readLines("$DAY.txt");
+    val lines = readLongs("$DAY.txt");
 
     println("-- Part 1 --")
     solve1(lines)
@@ -16,10 +16,38 @@ fun main(args: Array<String>) {
     solve2(lines)
 }
 
-fun solve1(lines: List<String>) {
-    val a = MyObject("test")
-    println(a)
+fun solve1(lines: List<Long>) {
+    var increases = 0
+    var previous = Long.MAX_VALUE
+    for (value in lines) {
+        if (value > previous) {
+            increases++
+        }
+        previous = value
+    }
+    println(increases)
 }
 
-fun solve2(lines: List<String>) {
+fun solve2(lines: List<Long>) {
+    var increases = 0
+    var previous = Long.MAX_VALUE
+    for (i in lines.indices) {
+        val value = sum(lines, i, 3);
+        if (value > previous) {
+            increases++
+        }
+        previous = value
+    }
+    println(increases)
+}
+
+fun sum(lines: List<Long>, index: Int, windowSize: Int): Long {
+    if (index + windowSize > lines.size) {
+        return -1;
+    }
+    var sum: Long = 0
+    for (i in index until index + windowSize) {
+        sum += lines[i]
+    }
+    return sum
 }
