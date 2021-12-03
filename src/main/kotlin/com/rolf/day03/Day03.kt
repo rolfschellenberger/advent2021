@@ -44,11 +44,9 @@ fun solve1(lines: List<String>, longs: List<Long>) {
         mostCommonString += mostCommon
         leastCommonString += leastCommon
     }
-    println(mostCommonString)
-    println(leastCommonString)
 
-    val gamma = Integer.parseInt(mostCommonString, 2);
-    val epsilon = Integer.parseInt(leastCommonString, 2);
+    val gamma = Integer.parseInt(mostCommonString, 2)
+    val epsilon = Integer.parseInt(leastCommonString, 2)
     println(gamma * epsilon)
 }
 
@@ -62,13 +60,11 @@ fun solve2(lines: List<String>, longs: List<Long>) {
         binaryCollection2.add(BinaryNumber(line))
     }
     for (i in 0 until lineLength) {
-        binaryCollection.filterMostCommon(i);
-        binaryCollection2.filterLeastCommon(i);
+        binaryCollection.filterMostCommon(i)
+        binaryCollection2.filterLeastCommon(i)
     }
-    println(binaryCollection)
-    println(binaryCollection2)
 
-    val oxygen = Integer.parseInt(binaryCollection.elements[0].input, 2);
-    val scrubber = Integer.parseInt(binaryCollection2.elements[0].input, 2);
+    val oxygen = binaryCollection.elements[0].toInt()
+    val scrubber = binaryCollection2.elements[0].toInt()
     println(oxygen * scrubber)
 }
