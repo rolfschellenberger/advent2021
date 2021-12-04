@@ -1,5 +1,7 @@
 package com.rolf.day03
 
+import com.rolf.BinaryNumber
+
 class BinaryCollection() {
     var elements: MutableList<BinaryNumber> = mutableListOf();
 

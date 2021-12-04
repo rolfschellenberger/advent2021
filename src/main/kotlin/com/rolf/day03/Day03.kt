@@ -1,5 +1,6 @@
 package com.rolf.day03
 
+import com.rolf.BinaryNumber
 import com.rolf.readLines
 import com.rolf.readLongs
 import kotlin.math.roundToInt
