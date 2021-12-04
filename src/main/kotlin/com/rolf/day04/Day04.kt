@@ -19,45 +19,33 @@ fun main(args: Array<String>) {
 }
 
 fun solve1(lines: List<String>) {
-    val lineGroups = groupLines(lines.subList(2, lines.size), "")
-
-    val bingoBoards: MutableList<BingoBoard> = mutableListOf()
-    for (boardLines in lineGroups) {
-        bingoBoards.add(parse(boardLines))
-    }
+    val numbers = readLineToLong(lines[0], ",")
+    val bingoBoards = groupLines(lines.subList(2, lines.size), "")
+        .map { parse(it) }
 
     // Play bingo!
-    for (number in readLineToLong(lines[0], ",")) {
-        for (bingoBoard in bingoBoards) {
-            bingoBoard.remove(number)
-        }
+    for (number in numbers) {
+        bingoBoards.forEach { it.remove(number) }
 
         // Winner?
-        for (bingoBoard in bingoBoards) {
-            if (bingoBoard.hasWon()) {
-                println(number)
-                println(bingoBoard.sum())
-                println(bingoBoard.sum() * number)
-                return
-            }
+        bingoBoards.filter { it.hasWon() }.forEach {
+            println(number)
+            println(it.sum())
+            println(it.sum() * number)
+            return
         }
     }
 }
 
 fun solve2(lines: List<String>) {
-    val lineGroups = groupLines(lines.subList(2, lines.size), "")
-
-    val bingoBoards: MutableList<BingoBoard> = mutableListOf()
-    for (boardLines in lineGroups) {
-        bingoBoards.add(parse(boardLines))
-    }
+    val numbers = readLineToLong(lines[0], ",")
+    val bingoBoards = groupLines(lines.subList(2, lines.size), "")
+        .map { parse(it) }
 
     // Play bingo!
     var winners = 0
-    for (number in readLineToLong(lines[0], ",")) {
-        for (bingoBoard in bingoBoards) {
-            bingoBoard.remove(number)
-        }
+    for (number in numbers) {
+        bingoBoards.forEach { it.remove(number) }
 
         // Winner?
         for (bingoBoard in bingoBoards) {
