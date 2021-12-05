@@ -16,23 +16,13 @@ data class OceanFloor(val input: List<MutableList<Int>>) : Matrix<Int>(input) {
         val maxX = maxOf(start.x, end.x)
         val minY = minOf(start.y, end.y)
         val maxY = maxOf(start.y, end.y)
+        val range = maxOf((maxX - minX), (maxY - minY))
 
         val points = mutableListOf<Point>()
-        // Horizontal?
-        if (minX == maxX || minY == maxY) {
-            for (y in minY..maxY) {
-                for (x in minX..maxX) {
-                    points.add(Point(x, y))
-                }
-            }
-        }
-        // Diagonal?
-        else {
-            val yDelta = if (end.y > start.y) 1 else -1
-            val xDelta = if (end.x > start.x) 1 else -1
-            for (i in 0..(maxY - minY)) {
-                points.add(Point(start.x + (i * xDelta), start.y + (i * yDelta)))
-            }
+        val yDelta = if (end.y > start.y) 1 else if (end.y == start.y) 0 else -1
+        val xDelta = if (end.x > start.x) 1 else if (end.x == start.x) 0 else -1
+        for (i in 0..range) {
+            points.add(Point(start.x + (i * xDelta), start.y + (i * yDelta)))
         }
         return points
     }
