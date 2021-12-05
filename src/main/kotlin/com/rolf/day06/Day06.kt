@@ -1,8 +1,8 @@
-package com.rolf.dayXX
+package com.rolf.day06
 
 import com.rolf.readLines
 
-const val DAY = "XX"
+const val DAY = "06"
 
 fun main(args: Array<String>) {
     println("+--------+")

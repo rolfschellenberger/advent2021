@@ -100,6 +100,44 @@ open class Matrix<T>(private val input: List<MutableList<T>>) {
     }
 }
 
+open class Box<T>(private val input: Array<Array<Array<T>>>) {
+
+    fun x(): Int {
+        return input.size
+    }
+
+    fun y(): Int {
+        if (x() == 0) return 0
+        return input[0].size
+    }
+
+    fun z(): Int {
+        if (x() == 0) return 0
+        if (y() == 0) return 0
+        return input[0][0].size
+    }
+
+    fun allValues(): List<T> {
+        val result = mutableListOf<T>()
+        for (x in 0 until x()) {
+            for (y in 0 until y()) {
+                for (z in 0 until z()) {
+                    result.add(get(x, y, z))
+                }
+            }
+        }
+        return result
+    }
+
+    fun get(x: Int, y: Int, z: Int): T {
+        return input[x][y][z]
+    }
+
+    fun set(x: Int, y: Int, z: Int, value: T) {
+        input[x][y][z] = value
+    }
+}
+
 data class BinaryNumber(
     val input: String
 ) {

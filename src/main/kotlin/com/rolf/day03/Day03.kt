@@ -11,8 +11,8 @@ fun main(args: Array<String>) {
     println("+--------+")
     println("| Day $DAY |")
     println("+--------+")
-    val lines = readLines("$DAY.txt");
-    val longs = readLongs("$DAY.txt");
+    val lines = readLines("$DAY.txt")
+    val longs = readLongs("$DAY.txt")
 
     println("-- Part 1 --")
     solve1(lines, longs)

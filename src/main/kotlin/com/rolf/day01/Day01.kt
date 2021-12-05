@@ -8,7 +8,7 @@ fun main(args: Array<String>) {
     println("+--------+")
     println("| Day $DAY |")
     println("+--------+")
-    val lines = readLongs("$DAY.txt");
+    val lines = readLongs("$DAY.txt")
 
     println("-- Part 1 --")
     solve1(lines)
