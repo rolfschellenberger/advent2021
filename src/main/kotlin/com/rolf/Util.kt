@@ -16,6 +16,10 @@ fun readLineToLong(line: String, delimiter: String): MutableList<Long> {
     return line.trim().replace("  ", " ").split(delimiter).map { it.toLong() }.toMutableList()
 }
 
+fun readLineToInt(line: String, delimiter: String): MutableList<Int> {
+    return line.trim().replace("  ", " ").split(delimiter).map { it.toInt() }.toMutableList()
+}
+
 fun groupLines(lines: List<String>, match: String): List<List<String>> {
     val groups = mutableListOf<MutableList<String>>()
     var group = mutableListOf<String>()

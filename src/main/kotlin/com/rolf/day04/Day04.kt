@@ -6,7 +6,7 @@ import com.rolf.readLines
 
 const val DAY = "04"
 
-fun main(args: Array<String>) {
+fun main() {
     println("+--------+")
     println("| Day $DAY |")
     println("+--------+")

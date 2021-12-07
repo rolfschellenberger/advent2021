@@ -4,7 +4,7 @@ import com.rolf.readLongs
 
 const val DAY = "01"
 
-fun main(args: Array<String>) {
+fun main() {
     println("+--------+")
     println("| Day $DAY |")
     println("+--------+")
@@ -32,7 +32,7 @@ fun solve2(lines: List<Long>) {
     var increases = 0
     var previous = Long.MAX_VALUE
     for (i in lines.indices) {
-        val value = sum(lines, i, 3);
+        val value = sum(lines, i, 3)
         if (value > previous) {
             increases++
         }
@@ -43,7 +43,7 @@ fun solve2(lines: List<Long>) {
 
 fun sum(lines: List<Long>, index: Int, windowSize: Int): Long {
     if (index + windowSize > lines.size) {
-        return -1;
+        return -1
     }
     var sum: Long = 0
     for (i in index until index + windowSize) {

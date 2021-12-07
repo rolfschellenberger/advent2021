@@ -2,25 +2,23 @@ package com.rolf.day03
 
 import com.rolf.BinaryNumber
 import com.rolf.readLines
-import com.rolf.readLongs
 import kotlin.math.roundToInt
 
 const val DAY = "03"
 
-fun main(args: Array<String>) {
+fun main() {
     println("+--------+")
     println("| Day $DAY |")
     println("+--------+")
     val lines = readLines("$DAY.txt")
-    val longs = readLongs("$DAY.txt")
 
     println("-- Part 1 --")
-    solve1(lines, longs)
+    solve1(lines)
     println("-- Part 2 --")
-    solve2(lines, longs)
+    solve2(lines)
 }
 
-fun solve1(lines: List<String>, longs: List<Long>) {
+fun solve1(lines: List<String>) {
     val list = mutableListOf<MutableList<Int>>()
     var first = true
     for (line in lines) {
@@ -40,7 +38,7 @@ fun solve1(lines: List<String>, longs: List<Long>) {
     var leastCommonString = ""
     for (s in list) {
         val mostCommon = s.average().roundToInt()
-        val leastCommon = 1 - mostCommon;
+        val leastCommon = 1 - mostCommon
 
         mostCommonString += mostCommon
         leastCommonString += leastCommon
@@ -51,7 +49,7 @@ fun solve1(lines: List<String>, longs: List<Long>) {
     println(gamma * epsilon)
 }
 
-fun solve2(lines: List<String>, longs: List<Long>) {
+fun solve2(lines: List<String>) {
     val binaryCollection = BinaryCollection()
     val binaryCollection2 = BinaryCollection()
     var lineLength = 0
