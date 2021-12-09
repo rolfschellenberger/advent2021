@@ -1,6 +1,7 @@
 package com.rolf.day05
 
 import com.rolf.Matrix
+import com.rolf.Point
 import java.lang.Math.abs
 
 data class OceanFloor(val input: List<MutableList<Int>>) : Matrix<Int>(input) {

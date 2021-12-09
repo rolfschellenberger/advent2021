@@ -99,10 +99,37 @@ open class Matrix<T>(private val input: List<MutableList<T>>) {
         return input[y][x]
     }
 
+    fun get(point: Point): T {
+        return get(point.x, point.y)
+    }
+
     fun set(x: Int, y: Int, value: T) {
         input[y][x] = value
     }
+
+    fun getNeighbours(point: Point): Set<Point> {
+        val result = mutableSetOf<Point>()
+        if (point.x + 1 < width()) {
+            val right = Point(point.x + 1, point.y)
+            result.add(right)
+        }
+        if (point.x - 1 >= 0) {
+            val left = Point(point.x - 1, point.y)
+            result.add(left)
+        }
+        if (point.y + 1 < height()) {
+            val up = Point(point.x, point.y + 1)
+            result.add(up)
+        }
+        if (point.y - 1 >= 0) {
+            val down = Point(point.x, point.y - 1)
+            result.add(down)
+        }
+        return result
+    }
 }
+
+data class Point(val x: Int, val y: Int)
 
 open class Box<T>(private val input: Array<Array<Array<T>>>) {
 

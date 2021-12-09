@@ -1,5 +1,6 @@
 package com.rolf.day05
 
+import com.rolf.Point
 import com.rolf.readLines
 
 const val DAY = "05"
