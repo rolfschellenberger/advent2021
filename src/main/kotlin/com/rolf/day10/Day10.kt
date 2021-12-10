@@ -89,12 +89,7 @@ fun getMissingChars(line: String): List<Char> {
     }
 
     // Inverse stack
-    val missingChars = mutableListOf<Char>()
-    while (!stack.isEmpty()) {
-        val openChar = stack.pop()
-        missingChars.add(getCloseChar(openChar))
-    }
-    return missingChars
+    return stack.map { getCloseChar(it) }.reversed()
 }
 
 fun getMissingCharsScore(missingChars: List<Char>): Long {
