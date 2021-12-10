@@ -4,6 +4,24 @@ import com.rolf.readLines
 import java.util.*
 
 const val DAY = "10"
+val charMap = mapOf(
+    Pair('(', ')'),
+    Pair('[', ']'),
+    Pair('{', '}'),
+    Pair('<', '>')
+)
+val part1Score = mapOf(
+    Pair(')', 3L),
+    Pair(']', 57L),
+    Pair('}', 1197L),
+    Pair('>', 25137L)
+)
+val part2Score = mapOf(
+    Pair(')', 1L),
+    Pair(']', 2L),
+    Pair('}', 3L),
+    Pair('>', 4L)
+)
 
 fun main() {
     println("+--------+")
@@ -27,113 +45,60 @@ fun solve1(lines: List<String>) {
 fun getWrongChar(line: String): Char? {
     val stack = Stack<Char>()
     for (char in line) {
-        when (char) {
-            '(', '[', '{', '<' -> stack.push(char)
-            ')' -> {
-                if (stack.pop() != '(') {
-                    return char
-                }
-            }
-            ']' -> {
-                if (stack.pop() != '[') {
-                    return char
-                }
-            }
-            '}' -> {
-                if (stack.pop() != '{') {
-                    return char
-                }
-            }
-            '>' -> {
-                if (stack.pop() != '<') {
-                    return char
-                }
+        if (isOpenChar(char)) {
+            stack.push(char)
+        } else {
+            val expected = charMap[stack.pop()]
+            if (char != expected) {
+//                println("Expected ${expected}, but found ${char} instead.")
+                return char
             }
         }
     }
     return null
 }
 
+fun isOpenChar(char: Char): Boolean {
+    return charMap.containsKey(char)
+}
+
 fun getWrongCharScore(char: Char): Long {
-    return when (char) {
-        ')' -> 3L
-        ']' -> 57L
-        '}' -> 1197L
-        '>' -> 25137L
-        else -> 0L
-    }
+    return part1Score.getOrDefault(char, 0L)
 }
 
 fun solve2(lines: List<String>) {
-    val scores = lines.filter { isCorrectLine(it) }
+    val scores = lines.filter { getWrongChar(it) == null }
         .map { getMissingChars(it) }
-        .map { getScore(it) }
+        .map { getMissingCharsScore(it) }
         .sorted()
     println(scores[scores.size / 2])
 }
 
-fun isCorrectLine(line: String): Boolean {
-    val stack = Stack<Char>()
-    for (char in line) {
-        when (char) {
-            '(', '[', '{', '<' -> stack.push(char)
-            ')' -> {
-                if (stack.pop() != '(') {
-                    return false
-                }
-            }
-            ']' -> {
-                if (stack.pop() != '[') {
-                    return false
-                }
-            }
-            '}' -> {
-                if (stack.pop() != '{') {
-                    return false
-                }
-            }
-            '>' -> {
-                if (stack.pop() != '<') {
-                    return false
-                }
-            }
-        }
-    }
-    return true
-}
-
 fun getMissingChars(line: String): List<Char> {
-    val result = mutableListOf<Char>()
     val stack = Stack<Char>()
     for (char in line) {
-        when (char) {
-            '(', '[', '{', '<' -> stack.push(char)
-            ')', ']', '}', '>' -> stack.pop()
+        if (isOpenChar(char)) {
+            stack.push(char)
+        } else {
+            stack.pop()
         }
     }
 
     // Inverse stack
+    val missingChars = mutableListOf<Char>()
     while (!stack.isEmpty()) {
-        when (stack.pop()) {
-            '(' -> result.add(')')
-            '[' -> result.add(']')
-            '{' -> result.add('}')
-            '<' -> result.add('>')
-        }
+        val openChar = stack.pop()
+        val closeChar = charMap[openChar]!!
+        missingChars.add(closeChar)
     }
-    return result
+    return missingChars
 }
 
-fun getScore(missingChars: List<Char>): Long {
+fun getMissingCharsScore(missingChars: List<Char>): Long {
     var sum = 0L
     for (char in missingChars) {
         sum *= 5L
-        when (char) {
-            ')' -> sum += 1L
-            ']' -> sum += 2L
-            '}' -> sum += 3L
-            '>' -> sum += 4L
-        }
+        sum += part2Score.getOrDefault(char, 0L)
     }
     return sum
 }
