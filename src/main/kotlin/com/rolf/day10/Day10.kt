@@ -48,7 +48,7 @@ fun getWrongChar(line: String): Char? {
         if (isOpenChar(char)) {
             stack.push(char)
         } else {
-            val expected = charMap[stack.pop()]
+            val expected = getCloseChar(stack.pop())
             if (char != expected) {
 //                println("Expected ${expected}, but found ${char} instead.")
                 return char
@@ -60,6 +60,10 @@ fun getWrongChar(line: String): Char? {
 
 fun isOpenChar(char: Char): Boolean {
     return charMap.containsKey(char)
+}
+
+fun getCloseChar(char: Char): Char {
+    return charMap[char]!!
 }
 
 fun getWrongCharScore(char: Char): Long {
@@ -88,8 +92,7 @@ fun getMissingChars(line: String): List<Char> {
     val missingChars = mutableListOf<Char>()
     while (!stack.isEmpty()) {
         val openChar = stack.pop()
-        val closeChar = charMap[openChar]!!
-        missingChars.add(closeChar)
+        missingChars.add(getCloseChar(openChar))
     }
     return missingChars
 }
