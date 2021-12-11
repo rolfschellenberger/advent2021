@@ -20,6 +20,24 @@ fun readLineToInt(line: String, delimiter: String): MutableList<Int> {
     return line.trim().replace("  ", " ").split(delimiter).map { it.toInt() }.toMutableList()
 }
 
+fun readLinesToMatrix(lines: List<String>, separator: String): List<List<String>> {
+    val rows = mutableListOf<List<String>>()
+    for (line in lines) {
+        var row: List<String>;
+        if (separator.isEmpty()) {
+            row = mutableListOf<String>()
+            for (char in line) {
+                row.add(char.toString())
+            }
+        } else {
+            row = line.split(separator)
+        }
+        rows.add(row)
+
+    }
+    return rows
+}
+
 fun groupLines(lines: List<String>, match: String): List<List<String>> {
     val groups = mutableListOf<MutableList<String>>()
     var group = mutableListOf<String>()

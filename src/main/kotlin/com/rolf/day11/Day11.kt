@@ -2,6 +2,7 @@ package com.rolf.day11
 
 import com.rolf.Point
 import com.rolf.readLines
+import com.rolf.readLinesToMatrix
 
 const val DAY = "11"
 
@@ -18,15 +19,8 @@ fun main() {
 }
 
 fun buildCave(lines: List<String>): Cave {
-    val rows = mutableListOf<MutableList<Int>>()
-    for (line in lines) {
-        val row = mutableListOf<Int>()
-        for (char in line) {
-            row.add((char.toString()).toInt())
-        }
-        rows.add(row)
-    }
-    return Cave(rows)
+    val rows = readLinesToMatrix(lines, "")
+    return Cave(rows.map { row -> row.map { string -> string.toInt() }.toMutableList() })
 }
 
 fun solve1(cave: Cave) {
