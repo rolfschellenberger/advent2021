@@ -127,6 +127,41 @@ open class Matrix<T>(private val input: List<MutableList<T>>) {
         }
         return result
     }
+
+    fun getNeighboursDiagonal(point: Point): Set<Point> {
+        val result = getNeighbours(point).toMutableSet()
+        if (point.x + 1 < width() && point.y + 1 < height()) {
+            val right = Point(point.x + 1, point.y + 1)
+            result.add(right)
+        }
+        if (point.x + 1 < width() && point.y - 1 >= 0) {
+            val right = Point(point.x + 1, point.y - 1)
+            result.add(right)
+        }
+        if (point.x - 1 >= 0 && point.y + 1 < height()) {
+            val right = Point(point.x - 1, point.y + 1)
+            result.add(right)
+        }
+        if (point.x - 1 >= 0 && point.y - 1 >= 0) {
+            val right = Point(point.x - 1, point.y - 1)
+            result.add(right)
+        }
+
+        return result
+    }
+
+    fun toString(separatorElement: String, separatorLine: String): String {
+        val builder = StringBuilder()
+        for (y in 0 until height()) {
+            for (x in 0 until width()) {
+                val value = get(x, y)
+                builder.append(value)
+                builder.append(separatorElement)
+            }
+            builder.append(separatorLine)
+        }
+        return builder.removeSuffix(separatorLine).toString()
+    }
 }
 
 data class Point(val x: Int, val y: Int)
