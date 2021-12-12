@@ -82,26 +82,27 @@ fun walk2(node: Cave, route: MutableList<Cave>): Int {
         return 0
     }
 
-    val occurrences = route.filter { it.value == node.value }.count()
-    // Did we already visit a small cave twice?
-    var smallVisitTwice = false
-    val map = route.groupingBy { it }.eachCount()
-    for ((key, value) in map) {
-        if (key.isSmall() && value > 1) {
-            smallVisitTwice = true
-        }
-    }
-
     // Limitations on small caves only
     if (node.isSmall()) {
+
         // When visited a small cave more than 2 times, abort
+        val occurrences = route.filter { it.value == node.value }.count()
         if (occurrences > 1) {
             return 0
         }
 
         // When visiting a small cave for the second time and there is another cave visited twice, abort
-        if (occurrences == 1 && smallVisitTwice) {
-            return 0
+        if (occurrences == 1) {
+            var smallVisitTwice = false
+            val map = route.groupingBy { it }.eachCount()
+            for ((key, value) in map) {
+                if (key.isSmall() && value > 1) {
+                    smallVisitTwice = true
+                }
+            }
+            if (smallVisitTwice) {
+                return 0
+            }
         }
     }
 
