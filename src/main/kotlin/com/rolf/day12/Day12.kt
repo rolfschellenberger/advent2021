@@ -17,10 +17,6 @@ fun main() {
     solve2(map["start"]!!)
 }
 
-fun printRoute(route: MutableList<Cave>) {
-    println(route.map { it.value }.joinToString(","))
-}
-
 fun parseMap(lines: List<String>): Map<String, Cave> {
     val map = mutableMapOf<String, Cave>()
 
@@ -49,7 +45,6 @@ fun walk(node: Cave, route: MutableList<Cave>): Int {
     // Reached the end?
     if (node.isEnd()) {
         route.add(node)
-//        printRoute(route)
         return 1
     }
 
@@ -79,7 +74,6 @@ fun walk2(node: Cave, route: MutableList<Cave>): Int {
     // Reached the end?
     if (node.isEnd()) {
         route.add(node)
-//        printRoute(route)
         return 1
     }
 
@@ -99,7 +93,6 @@ fun walk2(node: Cave, route: MutableList<Cave>): Int {
     }
 
     // Limitations on small caves only
-    var sum = 0
     if (node.isSmall()) {
         // When visited a small cave more than 2 times, abort
         if (occurrences > 1) {
@@ -110,16 +103,12 @@ fun walk2(node: Cave, route: MutableList<Cave>): Int {
         if (occurrences == 1 && smallVisitTwice) {
             return 0
         }
+    }
 
-        route.add(node)
-        for (other in node.others) {
-            sum += walk2(other, route.toMutableList())
-        }
-    } else {
-        route.add(node)
-        for (other in node.others) {
-            sum += walk2(other, route.toMutableList())
-        }
+    var sum = 0
+    route.add(node)
+    for (other in node.others) {
+        sum += walk2(other, route.toMutableList())
     }
     return sum
 }
