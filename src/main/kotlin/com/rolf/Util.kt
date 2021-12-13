@@ -1,6 +1,7 @@
 package com.rolf
 
 import java.io.File
+import kotlin.math.abs
 
 const val BASE_PATH = "src/main/resources"
 
@@ -20,7 +21,7 @@ fun readLineToInt(line: String, delimiter: String): MutableList<Int> {
     return line.trim().replace("  ", " ").split(delimiter).map { it.toInt() }.toMutableList()
 }
 
-fun readLinesToMatrix(lines: List<String>, separator: String): List<List<String>> {
+fun readLinesToMatrix(lines: List<String>, separator: String): MutableList<List<String>> {
     val rows = mutableListOf<List<String>>()
     for (line in lines) {
         var row: List<String>;
@@ -70,7 +71,7 @@ fun readMatrixLong(lines: List<String>, delimiter: String): Matrix<Long> {
     return Matrix(numbers)
 }
 
-open class Matrix<T>(private val input: List<MutableList<T>>) {
+open class Matrix<T>(private val input: MutableList<MutableList<T>>) {
 
     fun allElements(): List<T> {
         return input.flatten()
@@ -125,7 +126,15 @@ open class Matrix<T>(private val input: List<MutableList<T>>) {
         input[y][x] = value
     }
 
+    fun count(value: T): Int {
+        return allElements().filter { it == value }.count()
+    }
+
     fun getNeighbours(point: Point): Set<Point> {
+        return getNeighboursHorizontalVertical(point).plus(getNeighboursDiagonal(point))
+    }
+
+    fun getNeighboursHorizontalVertical(point: Point): Set<Point> {
         val result = mutableSetOf<Point>()
         if (point.x + 1 < width()) {
             val right = Point(point.x + 1, point.y)
@@ -147,7 +156,7 @@ open class Matrix<T>(private val input: List<MutableList<T>>) {
     }
 
     fun getNeighboursDiagonal(point: Point): Set<Point> {
-        val result = getNeighbours(point).toMutableSet()
+        val result = mutableSetOf<Point>()
         if (point.x + 1 < width() && point.y + 1 < height()) {
             val right = Point(point.x + 1, point.y + 1)
             result.add(right)
@@ -166,6 +175,37 @@ open class Matrix<T>(private val input: List<MutableList<T>>) {
         }
 
         return result
+    }
+
+    fun getOppositePointOverX(x: Int, y: Int, centerX: Int): Point {
+        val diff = abs(centerX - x)
+        return if (centerX > x) {
+            Point(centerX + diff, y)
+        } else {
+            Point(centerX - diff, y)
+        }
+    }
+
+    fun getOppositePointOverY(x: Int, y: Int, centerY: Int): Point {
+        val diff = abs(centerY - y)
+        return if (centerY > y) {
+            Point(x, centerY + diff)
+        } else {
+            Point(x, centerY - diff)
+        }
+    }
+
+    fun cutout(topLeftInclusive: Point, bottomRightInclusive: Point) {
+        val rows = mutableListOf<MutableList<T>>()
+        for (y in topLeftInclusive.y..bottomRightInclusive.y) {
+            val row = mutableListOf<T>()
+            for (x in topLeftInclusive.x..bottomRightInclusive.x) {
+                row.add(get(x, y))
+            }
+            rows.add(row)
+        }
+        input.clear()
+        input.addAll(rows)
     }
 
     fun toString(separatorElement: String, separatorLine: String): String {

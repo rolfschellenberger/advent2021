@@ -20,7 +20,7 @@ fun main() {
 
 fun buildCave(lines: List<String>): Cave {
     val rows = readLinesToMatrix(lines, "")
-    return Cave(rows.map { row -> row.map { string -> string.toInt() }.toMutableList() })
+    return Cave(rows.map { row -> row.map { string -> string.toInt() }.toMutableList() }.toMutableList())
 }
 
 fun solve1(cave: Cave) {
@@ -73,7 +73,7 @@ fun flash(cave: Cave, x: Int, y: Int): Long {
     if (octopusValue > 9) {
         flashes += 1L
         cave.set(x, y, 0)
-        val neighbours = cave.getNeighboursDiagonal(Point(x, y))
+        val neighbours = cave.getNeighbours(Point(x, y))
         for (neighbour in neighbours) {
             // Only increase octopus that didn't flash this step
             if (cave.get(neighbour) != 0) {

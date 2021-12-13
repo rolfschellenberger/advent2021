@@ -3,7 +3,7 @@ package com.rolf.day04
 import com.rolf.Matrix
 import com.rolf.readLineToLong
 
-class BingoBoard(input: List<MutableList<Long>>) : Matrix<Long>(input) {
+class BingoBoard(input: MutableList<MutableList<Long>>) : Matrix<Long>(input) {
 
     var hasWon: Boolean = false
 

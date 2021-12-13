@@ -4,7 +4,7 @@ import com.rolf.Matrix
 import com.rolf.Point
 
 
-data class Cave(val input: List<MutableList<Int>>) : Matrix<Int>(input) {
+data class Cave(val input: MutableList<MutableList<Int>>) : Matrix<Int>(input) {
 
     fun increase(point: Point) {
         increase(point.x, point.y)

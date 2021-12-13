@@ -75,7 +75,7 @@ fun solve2(floor: Floor) {
     println(sizes)
 }
 
-class Floor(input: List<MutableList<Int>>) : Matrix<Int>(input) {
+class Floor(input: MutableList<MutableList<Int>>) : Matrix<Int>(input) {
 
     fun getBasin(x: Int, y: Int): Basin {
         val startPoint = Point(x, y)
@@ -97,7 +97,7 @@ class Floor(input: List<MutableList<Int>>) : Matrix<Int>(input) {
         locations.add(point)
 
         // Otherwise visit neighbours
-        val neighbours = getNeighbours(point)
+        val neighbours = getNeighboursHorizontalVertical(point)
         for (neighbour in neighbours) {
             iterateBasinPoints(neighbour, locations)
         }
