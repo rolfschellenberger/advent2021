@@ -4,7 +4,7 @@ import com.rolf.Matrix
 import com.rolf.Point
 import java.lang.Math.abs
 
-data class OceanFloor(val input: MutableList<MutableList<Int>>) : Matrix<Int>(input) {
+class OceanFloor(input: MutableList<MutableList<Int>>) : Matrix<Int>(input) {
     fun place(pipe: Pipe) {
         val points = getPointsBetween(pipe.start, pipe.end)
 

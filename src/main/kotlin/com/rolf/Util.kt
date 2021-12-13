@@ -71,7 +71,10 @@ fun readMatrixLong(lines: List<String>, delimiter: String): Matrix<Long> {
     return Matrix(numbers)
 }
 
-open class Matrix<T>(private val input: MutableList<MutableList<T>>) {
+// TODO: Build matrix with default value
+// TODO: add elements to width or height with default value
+
+open class Matrix<T>(internal val input: MutableList<MutableList<T>>) {
 
     fun allElements(): List<T> {
         return input.flatten()
@@ -219,6 +222,20 @@ open class Matrix<T>(private val input: MutableList<MutableList<T>>) {
             builder.append(separatorLine)
         }
         return builder.removeSuffix(separatorLine).toString()
+    }
+
+    companion object {
+        fun <T> buildDefault(width: Int, height: Int, defaultValue: T): Matrix<T> {
+            val rows = mutableListOf<MutableList<T>>()
+            for (y in 0 until height) {
+                val row = mutableListOf<T>()
+                for (x in 0 until width) {
+                    row.add(defaultValue)
+                }
+                rows.add(row)
+            }
+            return Matrix(rows)
+        }
     }
 }
 

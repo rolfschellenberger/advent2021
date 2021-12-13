@@ -3,7 +3,7 @@ package com.rolf.day13
 import com.rolf.Matrix
 import com.rolf.Point
 
-class Paper(val input: MutableList<MutableList<String>>) : Matrix<String>(input) {
+class Paper(input: MutableList<MutableList<String>>) : Matrix<String>(input) {
 
     fun count(): Int {
         return count("#")
@@ -52,5 +52,11 @@ class Paper(val input: MutableList<MutableList<String>>) : Matrix<String>(input)
 
     override fun toString(): String {
         return super.toString("", "\n")
+    }
+
+    companion object {
+        fun buildDefault(width: Int, height: Int, defaultValue: String): Paper {
+            return Paper(Matrix.buildDefault(width, height, defaultValue).input)
+        }
     }
 }

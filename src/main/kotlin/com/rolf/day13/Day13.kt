@@ -11,12 +11,11 @@ fun main() {
     println("+--------+")
     val lines = readLines("$DAY.txt")
     val (coordinates, folds) = groupLines(lines, "")
-    val paper = parsePaper(coordinates)
 
     println("-- Part 1 --")
-    solve1(paper, folds)
+    solve1(parsePaper(coordinates), folds)
     println("-- Part 2 --")
-    solve2(paper, folds)
+    solve2(parsePaper(coordinates), folds)
 }
 
 fun parsePaper(coordinates: List<String>): Paper {
@@ -28,16 +27,7 @@ fun parsePaper(coordinates: List<String>): Paper {
         maxY = maxOf(maxY, y)
     }
 
-    val rows = mutableListOf<MutableList<String>>()
-    for (y in 0..maxY) {
-        val row = mutableListOf<String>()
-        for (x in 0..maxX) {
-            row.add(".")
-        }
-        rows.add(row)
-    }
-
-    val paper = Paper(rows)
+    val paper = Paper.buildDefault(maxX + 1, maxY + 1, ".")
     for (coordinate in coordinates) {
         val (x, y) = coordinate.split(",").map { it.toInt() }
         paper.set(x, y, "#")
