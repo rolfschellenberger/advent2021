@@ -71,9 +71,6 @@ fun readMatrixLong(lines: List<String>, delimiter: String): Matrix<Long> {
     return Matrix(numbers)
 }
 
-// TODO: Build matrix with default value
-// TODO: add elements to width or height with default value
-
 open class Matrix<T>(internal val input: MutableList<MutableList<T>>) {
 
     fun allElements(): List<T> {
