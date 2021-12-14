@@ -24,9 +24,9 @@ fun readLineToInt(line: String, delimiter: String): MutableList<Int> {
 fun readLinesToMatrix(lines: List<String>, separator: String): MutableList<List<String>> {
     val rows = mutableListOf<List<String>>()
     for (line in lines) {
-        var row: List<String>;
+        var row: List<String>
         if (separator.isEmpty()) {
-            row = mutableListOf<String>()
+            row = mutableListOf()
             for (char in line) {
                 row.add(char.toString())
             }
@@ -284,4 +284,22 @@ data class BinaryNumber(
     }
 
     fun toInt() = Integer.parseInt(input, 2)
+}
+
+data class Node(val value: String) {
+    val outgoing = mutableListOf<Node>()
+    val incoming = mutableListOf<Node>()
+
+    fun addOutgoing(node: Node) {
+        outgoing.add(node)
+    }
+
+    fun addIncoming(node: Node) {
+        incoming.add(node)
+    }
+
+    fun addBiDirectional(node: Node) {
+        outgoing.add(node)
+        incoming.add(node)
+    }
 }
