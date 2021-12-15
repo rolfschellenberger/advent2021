@@ -21,17 +21,22 @@ fun readLineToInt(line: String, delimiter: String): MutableList<Int> {
     return line.trim().replace("  ", " ").split(delimiter).map { it.toInt() }.toMutableList()
 }
 
-fun readLinesToMatrix(lines: List<String>, separator: String): MutableList<List<String>> {
-    val rows = mutableListOf<List<String>>()
+fun readLinesToMatrixInt(lines: List<String>, separator: String): MutableList<MutableList<Int>> {
+    val matrix = readLinesToMatrix(lines, separator)
+    return matrix.map { row -> row.map { it.toInt() }.toMutableList() }.toMutableList()
+}
+
+fun readLinesToMatrix(lines: List<String>, separator: String): MutableList<MutableList<String>> {
+    val rows = mutableListOf<MutableList<String>>()
     for (line in lines) {
-        var row: List<String>
+        var row: MutableList<String>
         if (separator.isEmpty()) {
             row = mutableListOf()
             for (char in line) {
                 row.add(char.toString())
             }
         } else {
-            row = line.split(separator)
+            row = line.split(separator).toMutableList()
         }
         rows.add(row)
 
