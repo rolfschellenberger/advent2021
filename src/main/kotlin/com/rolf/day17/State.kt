@@ -13,7 +13,7 @@ data class State(val point: Point, val xVelocity: Int, val yVelocity: Int) {
     }
 
     fun isPassed(xRange: IntRange, yRange: IntRange): Boolean {
-        // Right (higher) of xend or below (lower) ystart
+        // Right (higher) of last in x range or below (lower) the first in y range
         return point.x > xRange.last || point.y < yRange.first
     }
 
