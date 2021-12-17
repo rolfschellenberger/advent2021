@@ -29,7 +29,7 @@ fun solve(xRange: IntRange, yRange: IntRange) {
     var successfulFlights = 0
     for (xVelocity in 0..xRange.last) {
         // randomly picked this range
-        for (yVelocity in -1000..1000) {
+        for (yVelocity in yRange.first..1000) {
             var step = State(Point(0, 0), xVelocity, yVelocity)
 
             // Keep track of the highest point we reach during the flight
