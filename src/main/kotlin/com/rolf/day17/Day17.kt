@@ -35,8 +35,6 @@ fun solve(xRange: IntRange, yRange: IntRange) {
             // Keep track of the highest point we reach during the flight
             var highestPoint = 0
             while (!step.isPassed(xRange, yRange)) {
-                step = step.calculateNextStep()
-
                 // Keep measuring the highest point during the flight
                 highestPoint = maxOf(highestPoint, step.point.y)
                 if (step.isInArea(xRange, yRange)) {
@@ -45,6 +43,7 @@ fun solve(xRange: IntRange, yRange: IntRange) {
                     highestY = maxOf(highestY, highestPoint)
                     break
                 }
+                step = step.calculateNextStep()
             }
         }
     }
