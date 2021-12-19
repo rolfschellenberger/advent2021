@@ -1,89 +1,72 @@
 package com.rolf.day19
 
+import kotlin.math.cos
+import kotlin.math.round
+import kotlin.math.sin
+
 data class Location(val x: Int, val y: Int, val z: Int) : Comparable<Location> {
 
     fun allCombinations(): List<Location> {
         val combinations = mutableListOf<Location>()
 
-//        // Rotate in 4 positions over x-axis and look in both positive and negative direction of x-axis
-//        // FIXME: This doesn't work...
-//        val radians = listOf(0.0, 90.0, 180.0, 270.0).map { Math.toRadians(it) }
-//        for (radian in radians) {
-//            val y1 = round(y * cos(radian) - z * sin(radian)).toInt()
-//            val z1 = round(y * sin(radian) + z * cos(radian)).toInt()
-//            combinations.add(Location(x, y1, z1))
-//            combinations.add(Location(-x, y1, z1))
-//        }
-//
-//        for (radian in radians) {
-//            val z1 = round(z * cos(radian) - x * sin(radian)).toInt()
-//            val x1 = round(z * sin(radian) + x * cos(radian)).toInt()
-//            combinations.add(Location(x1, y, z1))
-//            combinations.add(Location(x1, -y, z1))
-//        }
-//
-//        for (radian in radians) {
-//            val x1 = round(x * cos(radian) - y * sin(radian)).toInt()
-//            val y1 = round(x * sin(radian) + y * cos(radian)).toInt()
-//            combinations.add(Location(x1, y1, z))
-//            combinations.add(Location(x1, y1, -z))
-//        }
+        // front
+        combinations.add(rotateZ(0.0))
+        combinations.add(rotateZ(90.0))
+        combinations.add(rotateZ(180.0))
+        combinations.add(rotateZ(270.0))
 
-        combinations.add(Location(x, y, z))
-        combinations.add(Location(x, y, -z))
-        combinations.add(Location(x, -y, z))
-        combinations.add(Location(x, -y, -z))
-        combinations.add(Location(-x, y, z))
-        combinations.add(Location(-x, y, -z))
-        combinations.add(Location(-x, -y, z))
-        combinations.add(Location(-x, -y, -z))
+        // right
+        combinations.add(rotateY(90.0))
+        combinations.add(rotateY(90.0).rotateZ(90.0))
+        combinations.add(rotateY(90.0).rotateZ(180.0))
+        combinations.add(rotateY(90.0).rotateZ(270.0))
 
-        combinations.add(Location(y, z, x))
-        combinations.add(Location(y, z, -x))
-        combinations.add(Location(y, -z, x))
-        combinations.add(Location(y, -z, -x))
-        combinations.add(Location(-y, z, x))
-        combinations.add(Location(-y, z, -x))
-        combinations.add(Location(-y, -z, x))
-        combinations.add(Location(-y, -z, -x))
+        // back
+        combinations.add(rotateY(180.0))
+        combinations.add(rotateY(180.0).rotateZ(90.0))
+        combinations.add(rotateY(180.0).rotateZ(180.0))
+        combinations.add(rotateY(180.0).rotateZ(270.0))
 
-        combinations.add(Location(z, x, y))
-        combinations.add(Location(z, x, -y))
-        combinations.add(Location(z, -x, y))
-        combinations.add(Location(z, -x, -y))
-        combinations.add(Location(-z, x, y))
-        combinations.add(Location(-z, x, -y))
-        combinations.add(Location(-z, -x, y))
-        combinations.add(Location(-z, -x, -y))
+        // left
+        combinations.add(rotateY(270.0))
+        combinations.add(rotateY(270.0).rotateZ(90.0))
+        combinations.add(rotateY(270.0).rotateZ(180.0))
+        combinations.add(rotateY(270.0).rotateZ(270.0))
 
-        combinations.add(Location(x, z, y))
-        combinations.add(Location(x, z, -y))
-        combinations.add(Location(x, -z, y))
-        combinations.add(Location(x, -z, -y))
-        combinations.add(Location(-x, z, y))
-        combinations.add(Location(-x, z, -y))
-        combinations.add(Location(-x, -z, y))
-        combinations.add(Location(-x, -z, -y))
+        // up
+        combinations.add(rotateX(90.0))
+        combinations.add(rotateX(90.0).rotateZ(90.0))
+        combinations.add(rotateX(90.0).rotateZ(180.0))
+        combinations.add(rotateX(90.0).rotateZ(270.0))
 
-        combinations.add(Location(y, x, z))
-        combinations.add(Location(y, x, -z))
-        combinations.add(Location(y, -x, z))
-        combinations.add(Location(y, -x, -z))
-        combinations.add(Location(-y, x, z))
-        combinations.add(Location(-y, x, -z))
-        combinations.add(Location(-y, -x, z))
-        combinations.add(Location(-y, -x, -z))
-
-        combinations.add(Location(z, y, x))
-        combinations.add(Location(z, y, -x))
-        combinations.add(Location(z, -y, x))
-        combinations.add(Location(z, -y, -x))
-        combinations.add(Location(-z, y, x))
-        combinations.add(Location(-z, y, -x))
-        combinations.add(Location(-z, -y, x))
-        combinations.add(Location(-z, -y, -x))
+        // down
+        combinations.add(rotateX(270.0))
+        combinations.add(rotateX(270.0).rotateZ(90.0))
+        combinations.add(rotateX(270.0).rotateZ(180.0))
+        combinations.add(rotateX(270.0).rotateZ(270.0))
 
         return combinations
+    }
+
+    private fun rotateX(degrees: Double): Location {
+        val radians = Math.toRadians(degrees)
+        val y1 = round(y * cos(radians) - z * sin(radians)).toInt()
+        val z1 = round(y * sin(radians) + z * cos(radians)).toInt()
+        return Location(x, y1, z1)
+    }
+
+    private fun rotateY(degrees: Double): Location {
+        val radians = Math.toRadians(degrees)
+        val z1 = round(z * cos(radians) - x * sin(radians)).toInt()
+        val x1 = round(z * sin(radians) + x * cos(radians)).toInt()
+        return Location(x1, y, z1)
+    }
+
+    private fun rotateZ(degrees: Double): Location {
+        val radians = Math.toRadians(degrees)
+        val x1 = round(x * cos(radians) - y * sin(radians)).toInt()
+        val y1 = round(x * sin(radians) + y * cos(radians)).toInt()
+        return Location(x1, y1, z)
     }
 
     override fun toString(): String {
