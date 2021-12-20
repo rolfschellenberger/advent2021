@@ -91,6 +91,10 @@ open class Matrix<T>(internal val input: MutableList<MutableList<T>>) {
         return input[0].size
     }
 
+    fun isOutside(x: Int, y: Int): Boolean {
+        return x < 0 || x >= width() || y < 0 || y >= height()
+    }
+
     fun getColumns(): List<List<T>> {
         val result = mutableListOf<List<T>>()
         for (x in 0 until width()) {
