@@ -55,14 +55,13 @@ class Scanner(val id: Int, val beacons: MutableSet<Location>) {
 
     private fun rotate(): List<List<Location>> {
         val result = mutableListOf<MutableList<Location>>()
-        for (i in 0 until 48) {
-            result.add(mutableListOf())
-        }
-
         for (beacon in beacons) {
             val combinations = beacon.allCombinations()
 
             for (index in combinations.indices) {
+                if (result.size <= index) {
+                    result.add(mutableListOf())
+                }
                 val combination = combinations[index]
                 result[index].add(combination)
             }
