@@ -40,10 +40,7 @@ data class Area(val xRange: IntRange, val yRange: IntRange, val zRange: IntRange
         val y = (yRange.last - yRange.first + 1).toLong()
         val z = (zRange.last - zRange.first + 1).toLong()
         val volume = x * y * z
-        var voidVolume = 0L
-        for (void in voids) {
-            voidVolume += void.volume()
-        }
+        val voidVolume = voids.map { it.volume() }.sum()
         return volume - voidVolume
     }
 }
