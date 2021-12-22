@@ -64,12 +64,12 @@ fun solve2(steps: List<Step>) {
     // - create a new void
     val space = mutableListOf<Area>()
     for (step in steps) {
-        val area = step.toArea()
-        for (cube in space) {
-            cube.remove(area)
+        val newArea = step.toArea()
+        for (area in space) {
+            area.remove(newArea)
         }
         if (step.on) {
-            space.add(area)
+            space.add(newArea)
         }
     }
 
