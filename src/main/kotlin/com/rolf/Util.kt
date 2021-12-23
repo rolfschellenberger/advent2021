@@ -82,6 +82,16 @@ open class Matrix<T>(internal val input: MutableList<MutableList<T>>) {
         return input.flatten()
     }
 
+    fun allPoints(): List<Point> {
+        val points = mutableListOf<Point>()
+        for (y in 0 until height()) {
+            for (x in 0 until width()) {
+                points.add(Point(x, y))
+            }
+        }
+        return points
+    }
+
     fun height(): Int {
         return input.size
     }
