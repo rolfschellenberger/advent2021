@@ -145,6 +145,10 @@ open class Matrix<T>(internal val input: MutableList<MutableList<T>>) {
         input[y][x] = value
     }
 
+    fun set(point: Point, value: T) {
+        set(point.x, point.y, value)
+    }
+
     fun count(value: T): Int {
         return allElements().filter { it == value }.count()
     }
